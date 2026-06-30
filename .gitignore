@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+results_store/
+vector_store/
+uploads/
+
+# Logs
+*.log
+
+# Virtual environment
+venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated folders
+results_store/
+vector_store/
+uploads/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
