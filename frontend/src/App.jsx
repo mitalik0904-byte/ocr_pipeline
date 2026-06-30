@@ -1,26 +1,46 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import MainLayout from "./layouts/MainLayout";
-import Process from "./pages/Process";
-import History from "./pages/History";
-import Statistics from "./pages/Statistics";
-import Chat from "./pages/Chat";
-import Architecture from "./pages/Architecture";
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import Home from './pages/Home'
+import BatchProcessing from './pages/BatchProcessing'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Toaster position="top-right" toastOptions={{ className: "bg-gray-900 text-white text-sm border border-gray-800" }} />
-      <MainLayout>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        {/* Navigation */}
+        <nav className="bg-white shadow-md sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <Link to="/" className="text-2xl font-bold text-indigo-600">
+              🏢 OCR Pipeline
+            </Link>
+            <div className="flex gap-6">
+              <Link
+                to="/"
+                className="text-gray-700 hover:text-indigo-600 font-medium transition"
+              >
+                Single File
+              </Link>
+              <Link
+                to="/batch"
+                className="text-gray-700 hover:text-indigo-600 font-medium transition"
+              >
+                Batch Processing
+              </Link>
+            </div>
+          </div>
+        </nav>
+
+        {/* Routes */}
         <Routes>
-          <Route path="/" element={<Process />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/architecture" element={<Architecture />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/batch" element={<BatchProcessing />} />
         </Routes>
-      </MainLayout>
-    </BrowserRouter>
-  );
+
+        {/* Notifications */}
+        <Toaster position="bottom-right" />
+      </div>
+    </Router>
+  )
 }
+
