@@ -105,6 +105,40 @@ class OCRPipeline:
         
         return merged
 
+    def run_ocr_only(self, img: np.ndarray, language: str = "auto") -> dict:
+        """Fast OCR-only processing for batch operations (no auditing/validation)."""
+        start = time.time()
+        
+        try:
+            logger.info("[OCR-Only] Processing image directly")
+            
+            # Ensure image is in correct format
+            if len(img.shape) == 2:
+                img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+            elif img.shape[2] == 4:
+                img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
+            
+            # Run OCR only
+            extracted = self.ocr_engine.extract(img, language)
+            
+            elapsed = round(time.time() - start, 2)
+            extracted["processing_time_seconds"] = elapsed
+            extracted["ocr_engine"] = "gemini_vision" if self.ocr_engine.gemini_enabled else "tesseract"
+            
+            logger.success(f"OCR-only done in {elapsed}s | lang={extracted.get('language_detected')}")
+            return extracted
+            
+        except Exception as e:
+            logger.error(f"OCR-only error: {e}")
+            return {
+                "error": str(e),
+                "routing": "HUMAN_REVIEW",
+                "confidence_score": 0.0,
+                "language_detected": None,
+                "processing_time_seconds": round(time.time()-start, 2),
+                "ocr_engine": "gemini_vision" if self.ocr_engine.gemini_enabled else "tesseract",
+            }
+
     def run(self, file_path: str, language: str = "auto", progress_cb=None) -> dict:
         start    = time.time()
         filename = Path(file_path).name
@@ -203,4 +237,3 @@ class OCRPipeline:
 
     def get_stats(self) -> dict:
         return self.rag.get_stats()
-
