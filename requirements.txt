@@ -1,0 +1,31 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.9
+aiofiles==23.2.1
+loguru==0.7.2
+pydantic==2.7.4
+
+# OCR & vision
+google-generativeai==0.8.6
+pytesseract==0.3.10
+pillow==10.1.0
+pdf2image==1.16.3
+
+# Processing
+opencv-python==4.8.1.78
+numpy==1.24.3
+scipy==1.11.4
+
+# Language detection & spell check
+langdetect==1.0.9
+pyspellchecker==0.9.0
+
+# LLM & RAG
+ollama==0.0.46
+
+# Frontend (optional)
+# React, Vite, Tailwind - see frontend/package.json
+
+# Utilities
+requests==2.31.0
+python-dateutil==2.8.2
